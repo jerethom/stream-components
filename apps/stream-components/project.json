@@ -1,25 +1,25 @@
 {
-  "name": "streal-components",
+  "name": "stream-components",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/streal-components/src",
+  "sourceRoot": "apps/stream-components/src",
   "prefix": "stream-components",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/streal-components",
-        "index": "apps/streal-components/src/index.html",
-        "main": "apps/streal-components/src/main.ts",
+        "outputPath": "dist/apps/stream-components",
+        "index": "apps/stream-components/src/index.html",
+        "main": "apps/stream-components/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/streal-components/tsconfig.app.json",
+        "tsConfig": "apps/stream-components/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/streal-components/src/favicon.ico",
-          "apps/streal-components/src/assets"
+          "apps/stream-components/src/favicon.ico",
+          "apps/stream-components/src/assets"
         ],
-        "styles": ["apps/streal-components/src/styles.scss"],
+        "styles": ["apps/stream-components/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -53,10 +53,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "streal-components:build:production"
+          "browserTarget": "stream-components:build:production"
         },
         "development": {
-          "browserTarget": "streal-components:build:development"
+          "browserTarget": "stream-components:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -64,7 +64,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "streal-components:build"
+        "browserTarget": "stream-components:build"
       }
     },
     "lint": {
@@ -72,8 +72,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "apps/streal-components/**/*.ts",
-          "apps/streal-components/**/*.html"
+          "apps/stream-components/**/*.ts",
+          "apps/stream-components/**/*.html"
         ]
       }
     },
@@ -81,7 +81,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/streal-components/jest.config.ts",
+        "jestConfig": "apps/stream-components/jest.config.ts",
         "passWithNoTests": true
       }
     }

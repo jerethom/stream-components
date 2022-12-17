@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'streal-components',
+  displayName: 'stream-components',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/streal-components',
+  coverageDirectory: '../../coverage/apps/stream-components',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

@@ -1,0 +1,6 @@
+<div class="grid">
+  <button (click)="userService.commands.refreshUser('1')">Refersh 1</button>
+  <button (click)="manual()">Refersh 1 manual</button>
+</div>
+<pre>{{ user1 | push | json }}</pre>
+<pre>{{ users | push | json }}</pre>
