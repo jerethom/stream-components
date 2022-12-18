@@ -1,5 +1,5 @@
 import { isAuth } from './Middlewares/IsAuth';
-import { t } from './Trpc';
+import { trpc } from './Trpc';
 
-export const publicProcedure = t.procedure;
-export const privateProcedure = t.procedure.use(isAuth);
+export const publicProcedure = trpc.procedure;
+export const privateProcedure = trpc.procedure.use(isAuth);

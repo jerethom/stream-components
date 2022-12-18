@@ -1,12 +1,16 @@
-import { t } from '../../Trpc';
-import { getById } from './GetById';
-import { getAll } from './GetAll';
-import { onAddUser } from './OnAddUser';
-import { addUser } from './AddUser';
+import { trpc } from '../../Trpc';
+import { getById } from './Query/GetById';
+import { getAll } from './Query/GetAll';
+import { onAdded } from './Subscription/OnAdded';
+import { add } from './Mutation/Add';
+import { isLogged } from './Query/IsLogged';
+import { logIn } from './Mutation/LogIn';
 
-export const userRouter = t.router({
+export const userRouter = trpc.router({
   getById,
   getAll,
-  onAddUser,
-  addUser,
+  onAdded,
+  add,
+  isLogged,
+  logIn,
 });

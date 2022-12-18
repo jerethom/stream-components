@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { User } from '@stream-components/shared';
-import { users } from '../../UsersData';
-import { privateProcedure } from '../../Procedures';
+import { users } from '../../../UsersData';
+import { privateProcedure } from '../../../Procedures';
 
 export const getById = privateProcedure
   .input(z.object({ id: z.string() }))

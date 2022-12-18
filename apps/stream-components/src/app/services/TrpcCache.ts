@@ -15,7 +15,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
    * Permet la réutilisation d'une query trpc en la mettant en cache dans une Map.
    * @protected
    */
-  protected cachify<
+  protected query<
     P extends Promise<Response>,
     R extends string | void,
     Response
@@ -24,7 +24,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
     refreshCommand: Observable<R>,
     composedKey: [string, string]
   ): Observable<Response>;
-  protected cachify<
+  protected query<
     P extends Promise<Response>,
     R extends string | void,
     Response
@@ -33,7 +33,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
     refreshCommand: Observable<R>,
     key: string
   ): Observable<Response>;
-  protected cachify<
+  protected query<
     P extends Promise<Response>,
     R extends string | void,
     Response
@@ -64,11 +64,17 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
 
   protected subscription<T extends (...args: any) => any>(
     trpcSubscription: T,
-    args: SubscriptionArgs<T>
+    args: SubscriptionArgs<T>,
+    options?: {
+      onData?: (data: SubscriptionData<T>) => Promise<void> | void;
+      onComplete?: () => Promise<void> | void;
+      onError?: () => Promise<void> | void;
+    }
   ): Observable<SubscriptionData<T>> {
     return new Observable((subscriber) => {
       const sub = trpcSubscription(args, {
         onData: (data: unknown) => {
+          options?.onData?.(data);
           subscriber.next(data);
         },
         onComplete: () => {

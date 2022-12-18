@@ -23,6 +23,12 @@ const trpc = createTRPCProxyClient<AppRouter>({
       }),
       false: httpLink({
         url: 'http://localhost:3000/trpc',
+        fetch(url, option) {
+          return fetch(url, {
+            ...option,
+            credentials: 'include',
+          });
+        },
       }),
     }),
   ],

@@ -11,15 +11,25 @@ import { QueryArgs, SubscriptionArgs, SubscriptionData } from '../../types';
 export class UserService extends TrpcCacheRxState<{
   refreshUser: string;
   refreshUsers: void;
+  refreshIsLogged: void;
+  refreshLogIn: void;
 }> {
   constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
     super();
   }
 
   listenUserAdded$(
-    args: SubscriptionArgs<typeof this.trpc.user.onAddUser.subscribe>
-  ): Observable<SubscriptionData<typeof this.trpc.user.onAddUser.subscribe>> {
-    return this.subscription(this.trpc.user.onAddUser.subscribe, args);
+    args: SubscriptionArgs<typeof this.trpc.user.onAdded.subscribe>
+  ): Observable<SubscriptionData<typeof this.trpc.user.onAdded.subscribe>> {
+    return this.subscription(this.trpc.user.onAdded.subscribe, args);
+  }
+
+  isLogged$() {
+    return this.query(
+      () => this.trpc.user.isLogged.query(),
+      this.commands.refreshIsLogged$,
+      'isLogged'
+    );
   }
 
   userById$({
@@ -27,7 +37,7 @@ export class UserService extends TrpcCacheRxState<{
   }: QueryArgs<typeof this.trpc.user.getById.query>): Observable<
     User | undefined
   > {
-    return this.cachify(
+    return this.query(
       (id) => this.trpc.user.getById.query({ id: id as string }),
       this.commands.refreshUser$,
       id
@@ -35,7 +45,7 @@ export class UserService extends TrpcCacheRxState<{
   }
 
   users$(): Observable<User[]> {
-    return this.cachify(
+    return this.query(
       () => this.trpc.user.getAll.query(),
       this.commands.refreshUsers$,
       'users'
@@ -43,6 +53,14 @@ export class UserService extends TrpcCacheRxState<{
   }
 
   addUser(): void {
-    this.trpc.user.addUser.mutate();
+    this.trpc.user.add.mutate();
+  }
+
+  logIn(args: QueryArgs<typeof this.trpc.user.logIn.query>) {
+    return this.query(
+      () => this.trpc.user.logIn.query(args),
+      this.commands.refreshLogIn$,
+      'logIn'
+    );
   }
 }

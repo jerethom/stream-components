@@ -1,10 +1,10 @@
-import { User } from '@stream-components/shared';
+import { createUser, User } from '@stream-components/shared';
 
 export const users: User[] = [
-  {
-    id: '1',
-  },
-  {
-    id: '2',
-  },
+  createUser({
+    email: 'a@teste.com',
+  }),
+  createUser({
+    email: 'b@teste.com',
+  }),
 ];
