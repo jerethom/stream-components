@@ -1,6 +1,7 @@
 import { RxActionFactory, RxActions } from '@rx-angular/state/actions';
 import { Actions } from '@rx-angular/state/actions/lib/types';
 import { filter, Observable, shareReplay, startWith, switchMap } from 'rxjs';
+import { SubscriptionArgs, SubscriptionData } from '../../types';
 
 export class TrpcCacheRxState<A extends Partial<Actions>> {
   commands: RxActions<A> = new RxActionFactory<A>().create();
@@ -47,13 +48,42 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
         key,
         refreshCommand.pipe(
           startWith(null),
-          filter((refreshKey) => refreshKey === null || refreshKey === key),
+          filter(
+            (refreshKey) =>
+              refreshKey === null ||
+              refreshKey === key ||
+              refreshKey === undefined
+          ),
           switchMap((refreshId) => trpcQuery(refreshId ?? key)),
           shareReplay({ refCount: true, bufferSize: 1 })
         )
       );
     }
     return this.internal.get(key) as Observable<Response>;
+  }
+
+  protected subscription<T extends (...args: any) => any>(
+    trpcSubscription: T,
+    args: SubscriptionArgs<T>
+  ): Observable<SubscriptionData<T>> {
+    return new Observable((subscriber) => {
+      const sub = trpcSubscription(args, {
+        onData: (data: unknown) => {
+          subscriber.next(data);
+        },
+        onComplete: () => {
+          sub.unsubscribe();
+          subscriber.complete();
+        },
+        onError: (err: unknown) => {
+          subscriber.error(err);
+        },
+      });
+
+      return () => {
+        sub.unsubscribe();
+      };
+    });
   }
 
   private flattenComposedKey(key: string | [string, string]): string {

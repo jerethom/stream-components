@@ -1,6 +1,7 @@
-import * as trpcFastify from '@trpc/server/adapters/fastify';
+import { CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { inferAsyncReturnType } from '@trpc/server';
 import { User } from '@stream-components/shared';
+import { CreateWSSContextFnOptions } from '@trpc/server/dist/adapters/ws';
 
 const user: User = {
   id: 'logged',
@@ -9,7 +10,7 @@ const user: User = {
 export async function createContext({
   req,
   res,
-}: trpcFastify.CreateFastifyContextOptions) {
+}: CreateFastifyContextOptions | CreateWSSContextFnOptions) {
   return { req, res, user };
 }
 

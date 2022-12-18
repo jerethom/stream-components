@@ -3,6 +3,7 @@ import fastify from 'fastify';
 import cors from '@fastify/cors';
 import { appRouter } from './AppRouter';
 import { createContext } from './Context';
+import { wsServer } from './WSServer';
 
 export type { AppRouter } from './AppRouter';
 
@@ -25,6 +26,9 @@ export const server = () => {
   });
 
   return {
-    start: () => server.listen({ port: 3000 }),
+    start: async () => {
+      await server.listen({ port: 3000 });
+      wsServer(server.server);
+    },
   };
 };

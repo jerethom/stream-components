@@ -9,8 +9,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "files": [],
-  "include": [],
+  "files": [
+  ],
+  "include": [
+  ],
   "references": [
     {
       "path": "./tsconfig.app.json"
