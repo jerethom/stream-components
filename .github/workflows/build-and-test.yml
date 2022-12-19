@@ -39,4 +39,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build
-        run: nx affected:build --exclude=docs --parallel
+        run: pnpm nx affected:build --exclude=docs --parallel
