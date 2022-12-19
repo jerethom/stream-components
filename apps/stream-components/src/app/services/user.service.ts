@@ -32,15 +32,13 @@ export class UserService extends TrpcCacheRxState<{
     );
   }
 
-  userById$({
-    id,
-  }: QueryArgs<typeof this.trpc.user.getById.query>): Observable<
-    User | undefined
-  > {
+  userById$(
+    args: QueryArgs<typeof this.trpc.user.getById.query>
+  ): Observable<User | undefined> {
     return this.query(
-      (id) => this.trpc.user.getById.query({ id: id as string }),
+      (id) => this.trpc.user.getById.query({ id: id ?? args.id }),
       this.commands.refreshUser$,
-      id
+      args.id
     );
   }
 

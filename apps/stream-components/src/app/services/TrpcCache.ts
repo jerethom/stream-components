@@ -1,7 +1,8 @@
 import { RxActionFactory, RxActions } from '@rx-angular/state/actions';
 import { Actions } from '@rx-angular/state/actions/lib/types';
 import { filter, Observable, shareReplay, startWith, switchMap } from 'rxjs';
-import { SubscriptionArgs, SubscriptionData } from '../../types';
+import { AnyFn, SubscriptionArgs, SubscriptionData } from '../../types';
+import { Unsubscribable } from '@trpc/server/observable';
 
 export class TrpcCacheRxState<A extends Partial<Actions>> {
   commands: RxActions<A> = new RxActionFactory<A>().create();
@@ -15,31 +16,9 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
    * Permet la réutilisation d'une query trpc en la mettant en cache dans une Map.
    * @protected
    */
-  protected query<
-    P extends Promise<Response>,
-    R extends string | void,
-    Response
-  >(
-    trpcQuery: (key: string | null | void) => P,
-    refreshCommand: Observable<R>,
-    composedKey: [string, string]
-  ): Observable<Response>;
-  protected query<
-    P extends Promise<Response>,
-    R extends string | void,
-    Response
-  >(
-    trpcQuery: (key: string | null | void) => P,
-    refreshCommand: Observable<R>,
-    key: string
-  ): Observable<Response>;
-  protected query<
-    P extends Promise<Response>,
-    R extends string | void,
-    Response
-  >(
-    trpcQuery: (key: string | null | void) => P,
-    refreshCommand: Observable<R>,
+  protected query<K extends string | void, Response>(
+    trpcQuery: (key: string | null | void | undefined) => Promise<Response>,
+    refreshCommand: Observable<K>,
     composedKey: string | [string, string]
   ): Observable<Response> {
     const key = this.flattenComposedKey(composedKey);
@@ -51,8 +30,8 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
           filter(
             (refreshKey) =>
               refreshKey === null ||
-              refreshKey === key ||
-              refreshKey === undefined
+              refreshKey === undefined ||
+              refreshKey === key
           ),
           switchMap((refreshId) => trpcQuery(refreshId ?? key)),
           shareReplay({ refCount: true, bufferSize: 1 })
@@ -62,7 +41,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
     return this.internal.get(key) as Observable<Response>;
   }
 
-  protected subscription<T extends (...args: any) => any>(
+  protected subscription<T extends AnyFn>(
     trpcSubscription: T,
     args: SubscriptionArgs<T>,
     options?: {
@@ -73,7 +52,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
   ): Observable<SubscriptionData<T>> {
     return new Observable((subscriber) => {
       const sub = trpcSubscription(args, {
-        onData: (data: unknown) => {
+        onData: (data: SubscriptionData<T>) => {
           options?.onData?.(data);
           subscriber.next(data);
         },
@@ -84,7 +63,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
         onError: (err: unknown) => {
           subscriber.error(err);
         },
-      });
+      }) as Unsubscribable;
 
       return () => {
         sub.unsubscribe();
