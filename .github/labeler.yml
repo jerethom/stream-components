@@ -9,3 +9,7 @@ Front:
 Lib:
   - libs/*
   - libs/**/*
+
+Github:
+  - .github/*
+  - .github/**/*
