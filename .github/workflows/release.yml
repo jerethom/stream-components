@@ -1,4 +1,4 @@
-name: stream-component release
+name: Stream Components - Release
 
 on: workflow_dispatch
 
