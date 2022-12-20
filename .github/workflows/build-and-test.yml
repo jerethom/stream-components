@@ -1,5 +1,5 @@
 # Inspired by : https://github.com/rx-angular/rx-angular/blob/main/.github/workflows/build-and-test.yml
-name: Stream Components - CI
+name: CI
 
 on:
   push:
