@@ -1,0 +1,43 @@
+# Inspired by : https://github.com/rx-angular/rx-angular/blob/main/.github/workflows/build-and-test.yml
+name: stream-components CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  # Group concurrency on workflow, then:
+  # - Is merge run? Group on branch name (`refs/heads/main`)
+  # - Is pull request? Group on pull request branch name, for example `feat/add-awesome-feature`
+  group: >-
+    ${{ github.workflow }}-${{
+      github.event_name == 'push'
+        && github.ref
+        || github.head_ref
+    }}
+  # Run merge workflows in sequence to prevent parallel deployments and releases
+  # Cancel stale pull request runs in progress for the same branch
+  cancel-in-progress: ${{ github.event_name != 'push' }}
+
+env:
+  NODE_OPTIONS: --max-old-space-size=6144
+  NX_VERBOSE_LOGGING: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout all commits
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up dependencies
+        uses: ./.github/actions/setup
+
+      - name: Build
+        run: pnpm nx affected:build --parallel --verbose

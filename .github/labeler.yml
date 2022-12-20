@@ -1,0 +1,15 @@
+Api:
+  - apps/api/*
+  - apps/api/**/*
+
+Front:
+  - apps/stream-components/*
+  - apps/stream-components/**/*
+
+Lib:
+  - libs/*
+  - libs/**/*
+
+Github:
+  - .github/*
+  - .github/**/*
