@@ -40,4 +40,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build
-        run: pnpm nx affected:build --base=main --parallel
+        run: pnpm nx affected:build --parallel --verbose
