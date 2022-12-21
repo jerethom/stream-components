@@ -9,6 +9,7 @@ export const SSESubscriptions =
     subscriptions: ((server: FastifyInstance) => unknown)[],
     opt: FastifyRegisterOptions<any>
   ) =>
+  // Fonction utilisée par le callback de Fastify
   (server: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
     subscriptions.forEach((sub) => {
       server.register((instance, opts, done) => {

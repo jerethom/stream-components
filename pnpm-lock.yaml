@@ -48,6 +48,7 @@ specifiers:
   eslint-plugin-cypress: 2.12.1
   fastify: 4.10.2
   fastify-sse-v2: 3.0.0
+  fp-ts: 2.13.1
   jest: 28.1.1
   jest-environment-jsdom: 28.1.1
   jest-preset-angular: 12.2.3
@@ -80,6 +81,7 @@ dependencies:
   argon2: 0.30.2
   fastify: 4.10.2
   fastify-sse-v2: 3.0.0_fastify@4.10.2
+  fp-ts: 2.13.1
   pino: 8.8.0
   superjson: 1.12.0
   uuid: 9.0.0
@@ -7642,6 +7644,10 @@ packages:
   /forwarded/0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
+
+  /fp-ts/2.13.1:
+    resolution: {integrity: sha512-0eu5ULPS2c/jsa1lGFneEFFEdTbembJv8e4QKXeVJ3lm/5hyve06dlKZrpxmMwJt6rYen7sxmHHK2CLaXvWuWQ==}
+    dev: false
 
   /fraction.js/4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
