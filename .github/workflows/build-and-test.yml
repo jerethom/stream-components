@@ -39,7 +39,7 @@ jobs:
       - name: Set up dependencies
         uses: ./.github/actions/setup
 
-      - name: Build
+      - name: Prisma generate types
         run: pnpm prisma generate
 
       - name: Build
