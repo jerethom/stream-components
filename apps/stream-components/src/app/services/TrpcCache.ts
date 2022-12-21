@@ -3,6 +3,7 @@ import { Actions } from '@rx-angular/state/actions/lib/types';
 import { filter, Observable, shareReplay, startWith, switchMap } from 'rxjs';
 import { AnyFn, SubscriptionArgs, SubscriptionData } from '../../types';
 import { Unsubscribable } from '@trpc/server/observable';
+import { environment } from '../../environments/environment';
 
 export class TrpcCacheRxState<A extends Partial<Actions>> {
   commands: RxActions<A> = new RxActionFactory<A>().create();
@@ -71,7 +72,51 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
     });
   }
 
+  protected sse<R>(
+    endpoint: string,
+    params?: Record<string, string>,
+    options?: {
+      onData?: (data: R) => Promise<void> | void;
+      onComplete?: () => Promise<void> | void;
+      onError?: (error: Event) => Promise<void> | void;
+    }
+  ): Observable<R> {
+    return new Observable((subscriber) => {
+      const eventSource = new EventSource(
+        `${environment.api.subscriptions}/${endpoint}${this.objectToQueryParams(
+          params
+        )}`,
+        {
+          withCredentials: true,
+        }
+      );
+      eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        options?.onData?.(data);
+        subscriber.next(data);
+      };
+      eventSource.onerror = (error) => {
+        options?.onError?.(error);
+        subscriber.error(error);
+      };
+
+      return () => {
+        options?.onComplete?.();
+        eventSource.close();
+      };
+    });
+  }
+
   private flattenComposedKey(key: string | [string, string]): string {
     return Array.isArray(key) ? key.join(':') : key;
+  }
+
+  private objectToQueryParams(params?: Record<string, string>): string {
+    if (Object.keys(params ?? {}).length) {
+      return `?${Object.entries(params ?? {})
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&')}`;
+    }
+    return '';
   }
 }

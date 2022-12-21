@@ -5,13 +5,14 @@ import { PushModule } from '@rx-angular/template';
 import { RxEffects } from '@rx-angular/state/effects';
 import { firstValueFrom } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'stream-components-root',
+  selector: 'sc-root',
   standalone: true,
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html',
-  imports: [JsonPipe, PushModule, ReactiveFormsModule],
+  imports: [JsonPipe, PushModule, ReactiveFormsModule, RouterOutlet],
   providers: [RxEffects],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     this.effects.register(this.users, () => console.count('users'));
-    this.effects.register(this.userService.listenUserAdded$(), () => {
+    this.effects.register(this.userService.userAdded$, (user) => {
+      console.log(user.id);
       this.userService.commands.refreshUsers();
     });
   }
