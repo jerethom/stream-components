@@ -1,4 +1,4 @@
-import { publicProcedure } from '../../../Procedures';
+import { publicProcedure } from '../../../../Procedures';
 import { extractUserFromAccessToken } from '../../../Middlewares/ExtractUserFromAccessToken';
 import { z } from 'zod';
 import { v4 } from 'uuid';

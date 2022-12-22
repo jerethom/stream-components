@@ -1,4 +1,4 @@
-import { trpc } from '../Trpc';
+import { trpc } from '../../Trpc';
 
 export const extractUserFromAccessToken = trpc.middleware(
   async ({ ctx, next }) => {

@@ -1,4 +1,4 @@
-import { trpc } from '../Trpc';
+import { trpc } from '../../Trpc';
 import { TRPCError } from '@trpc/server';
 
 export const isAuth = trpc.middleware(({ ctx, next }) => {

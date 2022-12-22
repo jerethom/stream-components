@@ -1,4 +1,4 @@
-import { trpc } from '../Trpc';
+import { trpc } from '../../Trpc';
 import { userRouter } from './User/UserRouter';
 import { chatRouter } from './Chat/ChatRouter';
 

@@ -1,6 +1,6 @@
-import { publicProcedure } from '../../../Procedures';
+import { publicProcedure } from '../../../../Procedures';
 import { observable } from '@trpc/server/observable';
-import { createTmiClient } from '../../../Utils/Tmi';
+import { createTmiClient } from '../../../../Utils/Tmi';
 import { Message } from '@stream-components/shared';
 import { v4 } from 'uuid';
 

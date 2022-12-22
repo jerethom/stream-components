@@ -1,7 +1,7 @@
-import { publicProcedure } from '../../../Procedures';
+import { publicProcedure } from '../../../../Procedures';
 import { observable } from '@trpc/server/observable';
 import { User } from '@stream-components/shared';
-import { eventEmitter, Events } from '../../../Utils/EventEmitter';
+import { eventEmitter, Events } from '../../../../Utils/EventEmitter';
 
 export const onAdded = publicProcedure.subscription(() =>
   observable<User>((emit) => {

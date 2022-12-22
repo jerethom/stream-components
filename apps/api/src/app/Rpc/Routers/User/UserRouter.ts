@@ -1,4 +1,4 @@
-import { trpc } from '../../Trpc';
+import { trpc } from '../../../Trpc';
 import { getById } from './Query/GetById';
 import { getAll } from './Query/GetAll';
 import { add } from './Mutation/Add';
