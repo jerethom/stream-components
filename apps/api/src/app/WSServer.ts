@@ -6,6 +6,7 @@ import * as http from 'http';
 export const wsServer = (server: http.Server, createContext: any) => {
   const wss = new ws.Server({
     server,
+    path: '/api/subscriptions',
   });
 
   const handler = applyWSSHandler({

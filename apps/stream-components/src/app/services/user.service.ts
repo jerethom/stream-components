@@ -14,10 +14,10 @@ export class UserService extends TrpcCacheRxState<{
   refreshIsLogged: void;
   refreshLogIn: void;
 }> {
-  readonly userAdded$: Observable<User> = this.sse('user.added', {
-    userId: 'foo',
-    streamId: 'bar',
-  });
+  readonly userAdded$: Observable<User> = this.subscription(
+    this.trpc.user.onAdded.subscribe,
+    void 0
+  );
 
   constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
     super();

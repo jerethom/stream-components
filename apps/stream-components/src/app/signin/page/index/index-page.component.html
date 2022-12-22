@@ -1,1 +1,5 @@
-<span>SignIn</span>
+<button (click)="addUser()">Add user</button>
+
+<pre *rxFor="let message of state.select('users')">{{
+  message | json
+}}</pre>

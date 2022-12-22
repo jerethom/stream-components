@@ -1,19 +1,17 @@
 import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
-import fastify from 'fastify';
+import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import { appRouter } from './Routers/AppRouter';
-import { prepareContext } from './Context';
+import { prepareContext } from './Utils/Context';
 import cookie from '@fastify/cookie';
-import { FastifySSEPlugin } from 'fastify-sse-v2';
-import { added } from './Routers/User/Subscription/Added';
-import { SSESubscriptions } from './SSESubscriptions';
 import staticPlugin from '@fastify/static';
 import { join } from 'node:path';
+import { wsServer } from './WSServer';
 
 export type { AppRouter } from './Routers/AppRouter';
 
 export const server = () => {
-  const server = fastify({
+  const fastify = Fastify({
     logger: {
       transport: {
         target: 'pino-pretty',
@@ -26,31 +24,30 @@ export const server = () => {
 
   const createContext = prepareContext();
 
-  server.register(cors, {
+  fastify.register(cors, {
     origin: true,
     credentials: true,
   });
-  server.register(cookie);
-  server.register(staticPlugin, {
+  fastify.register(cookie);
+  fastify.register(staticPlugin, {
     root: join(process.cwd(), 'dist', 'apps', 'stream-components'),
     redirect: true,
     index: 'index.html',
   });
-  server.register(FastifySSEPlugin);
-  server.register(fastifyTRPCPlugin, {
-    prefix: '/api/trpc',
+  fastify.register(fastifyTRPCPlugin, {
+    prefix: '/api',
     trpcOptions: { router: appRouter, createContext },
   });
-  server.register(SSESubscriptions([added], { prefix: '/api/subscriptions' }));
 
   process.on('SIGTERM', () => {
-    server.close();
+    fastify.close();
     console.log('SIGTERM');
   });
 
   return {
     start: async () => {
-      await server.listen({ port: 3000 });
+      wsServer(fastify.server, createContext);
+      await fastify.listen({ port: 3000 });
     },
   };
 };

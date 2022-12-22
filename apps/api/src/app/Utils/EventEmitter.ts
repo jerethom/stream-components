@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events';
 
 export const eventEmitter = new EventEmitter();
 
-export enum SSEEvents {
+export enum Events {
   UseAdded = 'UseAdded',
+  ChannelMessageAdded = 'ChannelMessageAdded',
 }

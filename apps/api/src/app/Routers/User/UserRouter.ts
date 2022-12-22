@@ -4,6 +4,7 @@ import { getAll } from './Query/GetAll';
 import { add } from './Mutation/Add';
 import { isLogged } from './Query/IsLogged';
 import { logIn } from './Mutation/LogIn';
+import { onAdded } from './Subscription/OnAdded';
 
 export const userRouter = trpc.router({
   getById,
@@ -11,4 +12,5 @@ export const userRouter = trpc.router({
   add,
   isLogged,
   logIn,
+  onAdded,
 });

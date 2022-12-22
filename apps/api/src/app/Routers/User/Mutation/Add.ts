@@ -1,6 +1,6 @@
 import { publicProcedure } from '../../../Procedures';
 import { users } from '../../../UsersData';
-import { eventEmitter, SSEEvents } from '../../../EventEmitter';
+import { eventEmitter, Events } from '../../../Utils/EventEmitter';
 import { createUser, User } from '@stream-components/shared';
 
 export const add = publicProcedure.mutation(() => {
@@ -8,5 +8,5 @@ export const add = publicProcedure.mutation(() => {
     email: 'test@test.com',
   });
   users.push(user);
-  eventEmitter.emit(SSEEvents.UseAdded, user);
+  eventEmitter.emit(Events.UseAdded, user);
 });
