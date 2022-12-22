@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { User } from '@stream-components/shared';
+import { Message, User } from '@stream-components/shared';
 import { TRPC, TRPCClient } from './trpc.service';
 import { Observable } from 'rxjs';
 import { TrpcCacheRxState } from './TrpcCache';
@@ -19,8 +19,10 @@ export class UserService extends TrpcCacheRxState<{
     void 0
   );
 
-  readonly messageAdded$: Observable<{ message: string; displayName: string }> =
-    this.subscription(this.trpc.chat.onMessage.subscribe, void 0);
+  readonly messageAdded$: Observable<Message> = this.subscription(
+    this.trpc.chat.onMessage.subscribe,
+    void 0
+  );
 
   constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
     super();

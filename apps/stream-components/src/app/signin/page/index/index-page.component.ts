@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { RxState } from '@rx-angular/state';
 import { bounceInLeftOnEnterAnimation } from 'angular-animations';
 import { TrackByService } from '../../../services/track-by.service';
+import { Messages } from '@stream-components/shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,7 +28,7 @@ export class IndexPageComponent implements OnInit {
     public readonly userService: UserService,
     public readonly trackBy: TrackByService,
     public readonly state: RxState<{
-      messages: { message: string; displayName: string }[];
+      messages: Messages;
     }>
   ) {}
 
