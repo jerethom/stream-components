@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { ForModule } from '@rx-angular/template';
-import { JsonPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { RxState } from '@rx-angular/state';
-import { User } from '@stream-components/shared';
+import { bounceInLeftOnEnterAnimation } from 'angular-animations';
+import { TrackByService } from '../../../services/track-by.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -12,30 +13,32 @@ import { User } from '@stream-components/shared';
   styles: [
     `
       :host {
-        @apply block;
+        @apply block h-screen;
       }
     `,
   ],
   standalone: true,
-  imports: [ForModule, JsonPipe],
+  imports: [ForModule, DatePipe],
   providers: [RxState],
+  animations: [bounceInLeftOnEnterAnimation()],
 })
 export class IndexPageComponent implements OnInit {
   constructor(
     public readonly userService: UserService,
-    public readonly state: RxState<{ users: User[] }>
+    public readonly trackBy: TrackByService,
+    public readonly state: RxState<{
+      messages: { message: string; displayName: string }[];
+    }>
   ) {}
 
   ngOnInit(): void {
     this.state.set({
-      users: [],
+      messages: [],
     });
-    this.state.hold(this.userService.userAdded$, (user) => {
-      this.state.set('users', ({ users }) => [...users, user]);
+    this.state.hold(this.userService.messageAdded$, (message) => {
+      this.state.set('messages', ({ messages }) =>
+        [...messages, message].slice(-10)
+      );
     });
-  }
-
-  addUser() {
-    this.userService.addUser();
   }
 }

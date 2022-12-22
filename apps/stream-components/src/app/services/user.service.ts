@@ -19,6 +19,9 @@ export class UserService extends TrpcCacheRxState<{
     void 0
   );
 
+  readonly messageAdded$: Observable<{ message: string; displayName: string }> =
+    this.subscription(this.trpc.chat.onMessage.subscribe, void 0);
+
   constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
     super();
   }
