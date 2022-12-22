@@ -7,6 +7,7 @@ import {
   wsLink,
 } from '@trpc/client';
 import { AppRouter } from '@stream-components/shared';
+import { environment } from '../../environments/environment';
 
 export const TRPC = new InjectionToken('trpc');
 
@@ -18,11 +19,11 @@ const trpc = createTRPCProxyClient<AppRouter>({
       },
       true: wsLink({
         client: createWSClient({
-          url: `ws://localhost:3000`,
+          url: `ws://localhost:4200/api/subscriptions`,
         }),
       }),
       false: httpLink({
-        url: 'http://localhost:3000/trpc',
+        url: environment.api.trpc,
         fetch(url, option) {
           return fetch(url, {
             ...option,

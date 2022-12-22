@@ -9,7 +9,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "streamComponents",
+            "prefix": "sc",
             "style": "camelCase"
           }
         ],
@@ -17,7 +17,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "stream-components",
+            "prefix": "sc",
             "style": "kebab-case"
           }
         ]

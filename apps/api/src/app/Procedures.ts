@@ -1,4 +1,4 @@
-import { isAuth } from './Middlewares/IsAuth';
+import { isAuth } from './Rpc/Middlewares/IsAuth';
 import { trpc } from './Trpc';
 
 export const publicProcedure = trpc.procedure;

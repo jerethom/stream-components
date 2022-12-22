@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import { User } from '@stream-components/shared';
+import { Message, User } from '@stream-components/shared';
 import { TRPC, TRPCClient } from './trpc.service';
 import { Observable } from 'rxjs';
 import { TrpcCacheRxState } from './TrpcCache';
-import { QueryArgs, SubscriptionArgs, SubscriptionData } from '../../types';
+import { QueryArgs } from '../../types';
 
 @Injectable({
   providedIn: 'root',
@@ -14,14 +14,18 @@ export class UserService extends TrpcCacheRxState<{
   refreshIsLogged: void;
   refreshLogIn: void;
 }> {
+  readonly userAdded$: Observable<User> = this.subscription(
+    this.trpc.user.onAdded.subscribe,
+    void 0
+  );
+
+  readonly messageAdded$: Observable<Message> = this.subscription(
+    this.trpc.chat.onMessage.subscribe,
+    void 0
+  );
+
   constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
     super();
-  }
-
-  listenUserAdded$(
-    args: SubscriptionArgs<typeof this.trpc.user.onAdded.subscribe>
-  ): Observable<SubscriptionData<typeof this.trpc.user.onAdded.subscribe>> {
-    return this.subscription(this.trpc.user.onAdded.subscribe, args);
   }
 
   isLogged$() {
