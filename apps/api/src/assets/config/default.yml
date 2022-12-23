@@ -1,0 +1,8 @@
+service:
+  twitch:
+    application:
+      clientId: ~
+      redirectUri: ~
+      responseType: code
+      scope:
+        - channel:manage:raids

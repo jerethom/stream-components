@@ -1,0 +1,7 @@
+service:
+  twitch:
+    application:
+      clientId: NODE_TWITCH_APPLICATION_CLIENT_ID
+      redirectUri: NODE_TWITCH_APPLICATION_REDIRECT_URI
+      responseType: NODE_TWITCH_APPLICATION_RESPONSE_TYPE
+      scope: NODE_TWITCH_APPLICATION_SCOPE

@@ -33,6 +33,7 @@ specifiers:
   '@rx-angular/template': 1.0.0-rc.4
   '@trpc/client': 10.5.0
   '@trpc/server': 10.5.0
+  '@types/config': 3.3.0
   '@types/jest': 28.1.1
   '@types/node': 18.11.16
   '@types/tmi.js': 1.8.2
@@ -43,6 +44,7 @@ specifiers:
   angular-animations: 0.11.0
   argon2: 0.30.2
   autoprefixer: ^10.4.13
+  config: 3.3.8
   cypress: 11.0.0
   eslint: 8.30.0
   eslint-config-prettier: 8.5.0
@@ -53,6 +55,7 @@ specifiers:
   jest: 28.1.1
   jest-environment-jsdom: 28.1.1
   jest-preset-angular: 12.2.3
+  js-yaml: 4.1.0
   nx: 15.3.3
   pino: 8.8.0
   pino-pretty: 9.1.1
@@ -79,9 +82,11 @@ dependencies:
   '@trpc/client': 10.5.0_@trpc+server@10.5.0
   '@trpc/server': 10.5.0
   argon2: 0.30.2
+  config: 3.3.8
   fastify: 4.10.2
   fastify-plugin: 4.4.0
   fp-ts: 2.13.1
+  js-yaml: 4.1.0
   pino: 8.8.0
   uuid: 9.0.0
   ws: 8.11.0
@@ -114,6 +119,7 @@ devDependencies:
   '@rx-angular/cdk': 1.0.0-rc.3_e7v5jbhynz6aslo4jtutsr57je
   '@rx-angular/state': 1.7.0_3dhtreaw4biwygtamd2jjkh3ye
   '@rx-angular/template': 1.0.0-rc.4_ar6wxiso4esrdk2gmmixh4d3xa
+  '@types/config': 3.3.0
   '@types/jest': 28.1.1
   '@types/node': 18.11.16
   '@types/tmi.js': 1.8.2
@@ -4018,6 +4024,10 @@ packages:
       '@types/node': 18.11.16
     dev: true
 
+  /@types/config/3.3.0:
+    resolution: {integrity: sha512-9kZSbl3/X3TVNowLCu5HFQdQmD+4287Om55avknEYkuo6R2dDrsp/EXEHUFvfYeG7m1eJ0WYGj+cbcUIhARJAQ==}
+    dev: true
+
   /@types/connect-history-api-fallback/1.3.5:
     resolution: {integrity: sha512-h8QJa8xSb1WD4fpKBDcATDNGXghFj6/3GRWG6dhmRcu0RX1Ubasur2Uvx5aeEwlf0MwblEC2bMzzMQntxnw/Cw==}
     dependencies:
@@ -4909,7 +4919,6 @@ packages:
 
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-    dev: true
 
   /aria-query/5.1.3:
     resolution: {integrity: sha512-R5iJ5lkuHybztUfuOAznmboyjWq8O6sqNqtK7CLOqdydi54VNbORp49mb14KbWgG1QD3JFO9hJdZ+y4KutfdOQ==}
@@ -5853,6 +5862,13 @@ packages:
 
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+
+  /config/3.3.8:
+    resolution: {integrity: sha512-rFzF6VESOdp7wAXFlB9IOZI4ouL05g3A03v2eRcTHj2JBQaTNJ40zhAUl5wRbWHqLZ+uqp/7OE0BWWtAVgrong==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      json5: 2.2.2
+    dev: false
 
   /confusing-browser-globals/1.0.11:
     resolution: {integrity: sha512-JsPKdmh8ZkmnHxDk55FZ1TqVLvEQTvoByJZRN9jzI0UjxK/QgAmsphz7PGtqgPieQZ/CQcHWXCR7ATDNhGe+YA==}
@@ -9245,7 +9261,6 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
-    dev: true
 
   /jsbn/0.1.1:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
@@ -9426,7 +9441,6 @@ packages:
     resolution: {integrity: sha512-46Tk9JiOL2z7ytNQWFLpj99RZkVgeHf87yGQKsIkaPz1qSH9UczKH1rO7K3wgRselo0tYMUNfecYpm/p1vC7tQ==}
     engines: {node: '>=6'}
     hasBin: true
-    dev: true
 
   /jsonc-parser/3.0.0:
     resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}

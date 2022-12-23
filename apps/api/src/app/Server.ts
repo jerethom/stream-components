@@ -9,11 +9,15 @@ import { join } from 'node:path';
 import { wsServer } from './WSServer';
 import { httpRouter } from './Http/Router/HttpRouter';
 import { databasePlugin } from './Http/Plugins/DatabasePlugin';
+import { configurationPlugin } from './Http/Plugins/ConfigurationPlugin/ConfigurationPlugin';
+import { v4 } from 'uuid';
+import { headerHook } from './Http/Hooks/HeaderHook';
 
 export type { AppRouter } from './Rpc/Routers/AppRouter';
 
 export const server = () => {
   const fastify = Fastify({
+    genReqId: () => v4(),
     logger: {
       transport: {
         target: 'pino-pretty',
@@ -22,11 +26,13 @@ export const server = () => {
         },
       },
     },
+    trustProxy: true,
   });
 
   const createContext = prepareContext();
 
   fastify.register(databasePlugin);
+  fastify.register(configurationPlugin);
   fastify.register(cors, {
     origin: true,
     credentials: true,
@@ -41,8 +47,9 @@ export const server = () => {
     prefix: '/api',
     trpcOptions: { router: appRouter, createContext },
   });
-
   fastify.register(httpRouter, { prefix: '/api' });
+
+  headerHook(fastify);
 
   process.on('SIGTERM', () => {
     fastify.close();
