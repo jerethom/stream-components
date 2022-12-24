@@ -1,11 +1,18 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { ForModule } from '@rx-angular/template';
+import { ForModule, PushModule } from '@rx-angular/template';
 import { DatePipe } from '@angular/common';
 import { RxState } from '@rx-angular/state';
 import { bounceInLeftOnEnterAnimation } from 'angular-animations';
 import { TrackByService } from '../../../services/track-by.service';
 import { Messages } from '@stream-components/shared';
+import { TRPC, TRPCClient } from '../../../services/trpc.service';
+import { from } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +26,7 @@ import { Messages } from '@stream-components/shared';
     `,
   ],
   standalone: true,
-  imports: [ForModule, DatePipe],
+  imports: [ForModule, DatePipe, PushModule],
   providers: [RxState],
   animations: [bounceInLeftOnEnterAnimation()],
 })
@@ -29,13 +36,18 @@ export class IndexPageComponent implements OnInit {
     public readonly trackBy: TrackByService,
     public readonly state: RxState<{
       messages: Messages;
-    }>
+      twitchUri: string;
+    }>,
+    @Inject(TRPC) public readonly trpc: TRPCClient
   ) {}
 
   ngOnInit(): void {
     this.state.set({
       messages: [],
     });
+
+    this.state.connect('twitchUri', from(this.trpc.twitch.authUri.query()));
+
     this.state.hold(this.userService.messageAdded$, (message) => {
       this.state.set('messages', ({ messages }) =>
         [...messages, message].slice(-10)

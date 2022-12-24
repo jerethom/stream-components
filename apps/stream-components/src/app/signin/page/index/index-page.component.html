@@ -1,3 +1,10 @@
+<a
+  [href]="state.select('twitchUri') | push"
+  class="px-3 py-2 bg-violet-900 text-white rounded-lg"
+  target="_blank"
+  >Twitch</a
+>
+
 <div class="grid grid-cols-1 gap-y-4 overflow-hidden">
   <div
     *rxFor="let message of state.select('messages')"

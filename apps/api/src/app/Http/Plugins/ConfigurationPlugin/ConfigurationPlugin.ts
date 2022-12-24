@@ -4,15 +4,17 @@ import * as config from 'config';
 import { configurationValidator } from './ConfigurationValidator';
 import { ZodError } from 'zod';
 import { ZodConfigurationError } from './ZodConfigurationError';
+import { ConfigurationAdapter } from '../../../Adapter/Configuration/ConfigurationAdapter';
+import { configurationNodeConfig } from '../../../Adapter/Configuration/ConfigurationNodeConfig';
 
 declare module 'fastify' {
   interface FastifyInstance {
-    config: typeof config;
+    config: ConfigurationAdapter;
   }
 }
 
 export const configurationPlugin: FastifyPluginAsync = fp(async (server) => {
-  server.decorate('config', config);
+  server.decorate('config', configurationNodeConfig);
 
   try {
     await configurationValidator.parseAsync(config.util.toObject());
