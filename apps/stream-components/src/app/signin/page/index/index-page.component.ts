@@ -21,7 +21,7 @@ import { from } from 'rxjs';
   styles: [
     `
       :host {
-        @apply block h-screen;
+        @apply block h-screen p-4;
       }
     `,
   ],
@@ -31,6 +31,10 @@ import { from } from 'rxjs';
   animations: [bounceInLeftOnEnterAnimation()],
 })
 export class IndexPageComponent implements OnInit {
+  readonly twitchUri$ = this.state.select('twitchUri');
+
+  readonly messages$ = this.state.select('messages');
+
   constructor(
     public readonly userService: UserService,
     public readonly trackBy: TrackByService,

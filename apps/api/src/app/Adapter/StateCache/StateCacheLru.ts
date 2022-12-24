@@ -8,8 +8,8 @@ const lru = new LRU({
 });
 
 export const stateCacheLru: StateCacheAdapter = {
-  set: async (input: string): Promise<void> => {
-    lru.set(input, input);
+  set: async (key: string, value: string): Promise<void> => {
+    lru.set(key, value);
   },
   has: async (input: string): Promise<boolean> => {
     return lru.has(input);

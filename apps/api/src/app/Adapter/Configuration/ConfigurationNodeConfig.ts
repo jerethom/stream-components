@@ -1,11 +1,14 @@
 import { ConfigurationAdapter } from './ConfigurationAdapter';
-import * as config from 'config';
+import config from 'config';
 
 export const configurationNodeConfig: ConfigurationAdapter = {
-  get: function <T>(key: string): T {
+  get: <T>(key: string): T => {
     return config.get(key);
   },
-  has: function (key: string): boolean {
+  has: (key: string): boolean => {
     return config.has(key);
+  },
+  toObject: (): Record<string, unknown> => {
+    return config.util.toObject() as Record<string, unknown>;
   },
 };

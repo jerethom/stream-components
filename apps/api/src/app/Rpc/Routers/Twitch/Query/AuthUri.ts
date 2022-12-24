@@ -1,6 +1,7 @@
 import { publicProcedure } from '../../../../Procedures';
 import { URL } from 'node:url';
-import { randomBytes } from 'node:crypto';
+import { createHash } from 'node:crypto';
+import { v4 } from 'uuid';
 
 export const authUri = publicProcedure.query(async ({ ctx }) => {
   let scope = ctx.config.get<string | string[]>(
@@ -11,7 +12,10 @@ export const authUri = publicProcedure.query(async ({ ctx }) => {
   }
   scope = scope.join(' ');
 
-  const state = randomBytes(10).toString('hex');
+  const uuid = v4();
+  const state = createHash('sha256')
+    .update(`${scope}${uuid}`, 'utf-8')
+    .digest('hex');
 
   const uri = new URL('https://id.twitch.tv/oauth2/authorize');
   uri.searchParams.set(
@@ -29,7 +33,7 @@ export const authUri = publicProcedure.query(async ({ ctx }) => {
   uri.searchParams.set('state', state);
   uri.searchParams.set('scope', scope);
 
-  ctx.stateCache.set(state);
+  ctx.stateCache.set(state, uuid);
 
   return uri.toString();
 });
