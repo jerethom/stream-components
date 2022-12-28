@@ -2,9 +2,9 @@ import { createUser, User } from '@stream-components/shared';
 
 export const users: User[] = [
   createUser({
-    email: 'a@teste.com',
+    login: 'foo',
   }),
   createUser({
-    email: 'b@teste.com',
+    login: 'bar',
   }),
 ];

@@ -1,8 +1,17 @@
+options:
+  tokenLength: 80
+  tokenName: sc:token
+
+front:
+  url: http://localhost:4200
+
 service:
   twitch:
     application:
-      clientId: ~
-      redirectUri: ~
+      clientId: n8lnddawyhfks0ezwx2lmscwhlmwu3
+      clientSecret: ~
+      redirectUri: http://localhost:4200/api/twitch.checkAuthorization
       responseType: code
       scope:
-        - channel:manage:raids
+        - chat:read
+        - user:read:email

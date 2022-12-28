@@ -4,11 +4,13 @@ import type * as PrismaTypes from '@prisma/client';
 export type User = PrismaTypes.User;
 
 export function createUser(
-  seed: Partial<User> & Required<Pick<User, 'email'>>
+  seed: Partial<User> & Required<Pick<User, 'login'>>
 ): User {
   return {
     id: seed.id ?? v4(),
-    email: seed.email,
-    password: seed.password ?? null,
+    login: seed.login,
+    refresh: seed.refresh ?? null,
+    access: seed.access ?? null,
+    expiresIn: seed.expiresIn ?? null,
   };
 }

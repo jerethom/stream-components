@@ -1,6 +1,13 @@
 import { RxActionFactory, RxActions } from '@rx-angular/state/actions';
 import { Actions } from '@rx-angular/state/actions/lib/types';
-import { filter, Observable, shareReplay, startWith, switchMap } from 'rxjs';
+import {
+  filter,
+  Observable,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AnyFn, SubscriptionArgs, SubscriptionData } from '../../types';
 import { Unsubscribable } from '@trpc/server/observable';
 
@@ -27,6 +34,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
         key,
         refreshCommand.pipe(
           startWith(null),
+          tap(() => console.log('startWith')),
           filter(
             (refreshKey) =>
               refreshKey === null ||
@@ -34,7 +42,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
               refreshKey === key
           ),
           switchMap((refreshId) => trpcQuery(refreshId ?? key)),
-          shareReplay({ refCount: true, bufferSize: 1 })
+          shareReplay(1)
         )
       );
     }

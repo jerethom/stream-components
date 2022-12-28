@@ -10,7 +10,9 @@
     "postinstall": "node ./decorate-angular-cli.js",
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "docker-compose:up": "docker-compose up -d",
+    "easy": "prisma format && prisma generate && prisma db push"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +24,7 @@
     "@trpc/server": "10.5.0",
     "argon2": "0.30.2",
     "config": "3.3.8",
+    "date-fns": "2.29.3",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "fp-ts": "2.13.1",
@@ -61,6 +64,7 @@
     "@rx-angular/state": "1.7.0",
     "@rx-angular/template": "1.0.0-rc.4",
     "@types/config": "3.3.0",
+    "@types/date-fns": "2.6.0",
     "@types/jest": "28.1.1",
     "@types/ms": "0.7.31",
     "@types/node": "18.11.16",

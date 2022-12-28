@@ -34,6 +34,7 @@ specifiers:
   '@trpc/client': 10.5.0
   '@trpc/server': 10.5.0
   '@types/config': 3.3.0
+  '@types/date-fns': 2.6.0
   '@types/jest': 28.1.1
   '@types/ms': 0.7.31
   '@types/node': 18.11.16
@@ -47,6 +48,7 @@ specifiers:
   autoprefixer: ^10.4.13
   config: 3.3.8
   cypress: 11.0.0
+  date-fns: 2.29.3
   eslint: 8.30.0
   eslint-config-prettier: 8.5.0
   eslint-plugin-cypress: 2.12.1
@@ -86,6 +88,7 @@ dependencies:
   '@trpc/server': 10.5.0
   argon2: 0.30.2
   config: 3.3.8
+  date-fns: 2.29.3
   fastify: 4.10.2
   fastify-plugin: 4.4.0
   fp-ts: 2.13.1
@@ -125,6 +128,7 @@ devDependencies:
   '@rx-angular/state': 1.7.0_3dhtreaw4biwygtamd2jjkh3ye
   '@rx-angular/template': 1.0.0-rc.4_ar6wxiso4esrdk2gmmixh4d3xa
   '@types/config': 3.3.0
+  '@types/date-fns': 2.6.0
   '@types/jest': 28.1.1
   '@types/ms': 0.7.31
   '@types/node': 18.11.16
@@ -4048,24 +4052,31 @@ packages:
     dev: true
 
   /@types/cookie/0.4.1:
-    resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
+    resolution: { integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q== }
     dev: true
 
   /@types/cors/2.8.13:
-    resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
+    resolution: { integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA== }
     dependencies:
       '@types/node': 18.11.16
     dev: true
 
+  /@types/date-fns/2.6.0:
+    resolution: { integrity: sha512-9DSw2ZRzV0Tmpa6PHHJbMcZn79HHus+BBBohcOaDzkK/G3zMjDUDYjJIWBFLbkh+1+/IOS0A59BpQfdr37hASg== }
+    deprecated: This is a stub types definition for date-fns (https://github.com/date-fns/date-fns). date-fns provides its own type definitions, so you don't need @types/date-fns installed!
+    dependencies:
+      date-fns: 2.29.3
+    dev: true
+
   /@types/eslint-scope/3.7.4:
-    resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
+    resolution: { integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA== }
     dependencies:
       '@types/eslint': 8.4.10
       '@types/estree': 0.0.51
     dev: true
 
   /@types/eslint/8.4.10:
-    resolution: {integrity: sha512-Sl/HOqN8NKPmhWo2VBEPm0nvHnu2LL3v9vKo8MEq0EtbJ4eVzGPl41VNPvn5E1i5poMk4/XD8UriLHpJvEP/Nw==}
+    resolution: { integrity: sha512-Sl/HOqN8NKPmhWo2VBEPm0nvHnu2LL3v9vKo8MEq0EtbJ4eVzGPl41VNPvn5E1i5poMk4/XD8UriLHpJvEP/Nw== }
     dependencies:
       '@types/estree': 0.0.51
       '@types/json-schema': 7.0.11
@@ -6281,20 +6292,24 @@ packages:
     dev: true
 
   /data-urls/3.0.2:
-    resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}
-    engines: {node: '>=12'}
+    resolution: { integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ== }
+    engines: { node: '>=12' }
     dependencies:
       abab: 2.0.6
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
     dev: true
 
+  /date-fns/2.29.3:
+    resolution: { integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA== }
+    engines: { node: '>=0.11' }
+
   /dateformat/4.6.3:
-    resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
+    resolution: { integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA== }
     dev: true
 
   /dayjs/1.11.7:
-    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    resolution: { integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ== }
     dev: true
 
   /debug/2.6.9:

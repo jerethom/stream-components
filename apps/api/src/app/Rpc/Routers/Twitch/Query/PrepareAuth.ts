@@ -3,7 +3,7 @@ import { URL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { v4 } from 'uuid';
 
-export const authUri = publicProcedure.query(async ({ ctx }) => {
+export const prepareAuth = publicProcedure.query(async ({ ctx }) => {
   let scope = ctx.config.get<string | string[]>(
     'service.twitch.application.scope'
   );
@@ -35,5 +35,18 @@ export const authUri = publicProcedure.query(async ({ ctx }) => {
 
   ctx.stateCache.set(state, uuid);
 
-  return uri.toString();
+  // Supprime le token dans les cookies s'il existe
+  const scTokenCookie = ctx.req.cookies['sc:token'];
+  if (scTokenCookie) {
+    ctx.res.clearCookie('sc:token');
+    await ctx.database.token
+      .delete({
+        where: {
+          content: scTokenCookie,
+        },
+      })
+      .catch(() => void 0 /* Ignore error */);
+  }
+
+  return ctx.res.redirect(uri.toString());
 });

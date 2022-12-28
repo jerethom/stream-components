@@ -3,7 +3,6 @@ import { Message, User } from '@stream-components/shared';
 import { TRPC, TRPCClient } from './trpc.service';
 import { Observable } from 'rxjs';
 import { TrpcCacheRxState } from './TrpcCache';
-import { QueryArgs } from '../../types';
 
 @Injectable({
   providedIn: 'root',
@@ -24,45 +23,13 @@ export class UserService extends TrpcCacheRxState<{
     void 0
   );
 
+  readonly isLogged$ = this.query(
+    () => this.trpc.user.isLogged.query(),
+    this.commands.refreshIsLogged$,
+    'isLogged'
+  );
+
   constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
     super();
-  }
-
-  isLogged$() {
-    return this.query(
-      () => this.trpc.user.isLogged.query(),
-      this.commands.refreshIsLogged$,
-      'isLogged'
-    );
-  }
-
-  userById$(
-    args: QueryArgs<typeof this.trpc.user.getById.query>
-  ): Observable<User | undefined> {
-    return this.query(
-      (id) => this.trpc.user.getById.query({ id: id ?? args.id }),
-      this.commands.refreshUser$,
-      args.id
-    );
-  }
-
-  users$(): Observable<User[]> {
-    return this.query(
-      () => this.trpc.user.getAll.query(),
-      this.commands.refreshUsers$,
-      'users'
-    );
-  }
-
-  addUser(): void {
-    this.trpc.user.add.mutate();
-  }
-
-  logIn(args: QueryArgs<typeof this.trpc.user.logIn.query>) {
-    return this.query(
-      () => this.trpc.user.logIn.query(args),
-      this.commands.refreshLogIn$,
-      'logIn'
-    );
   }
 }

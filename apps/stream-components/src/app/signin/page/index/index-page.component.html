@@ -1,14 +1,3 @@
-<a [href]="twitchUri$ | push" target="_blank">
+<a href="/api/twitch.prepareAuth" target="_blank">
   <button class="px-3 py-2 bg-violet-900 text-white rounded-lg">Twitch</button>
 </a>
-
-<div class="grid grid-cols-1 gap-y-4 overflow-hidden">
-  <div
-    *rxFor="let message of messages$; trackBy: trackBy.id"
-    [@bounceInLeftOnEnter]
-    class="bg-white rounded-lg p-3"
-  >
-    <p>{{ message.displayName }}</p>
-    <p>{{ message.content }}</p>
-  </div>
-</div>

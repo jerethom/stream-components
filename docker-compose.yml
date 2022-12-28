@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  redis:
+    image: redis:7.0.7-bullseye
+    deploy:
+      resources:
+        limits:
+          memory: 128mb
+    networks:
+      - stream-components
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./tools/config/redis.config:/usr/local/etc/redis
+    command: redis-server
+
+networks:
+  stream-components:

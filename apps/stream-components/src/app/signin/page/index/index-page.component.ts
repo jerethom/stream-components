@@ -12,7 +12,6 @@ import { bounceInLeftOnEnterAnimation } from 'angular-animations';
 import { TrackByService } from '../../../services/track-by.service';
 import { Messages } from '@stream-components/shared';
 import { TRPC, TRPCClient } from '../../../services/trpc.service';
-import { from } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,8 +30,6 @@ import { from } from 'rxjs';
   animations: [bounceInLeftOnEnterAnimation()],
 })
 export class IndexPageComponent implements OnInit {
-  readonly twitchUri$ = this.state.select('twitchUri');
-
   readonly messages$ = this.state.select('messages');
 
   constructor(
@@ -40,7 +37,6 @@ export class IndexPageComponent implements OnInit {
     public readonly trackBy: TrackByService,
     public readonly state: RxState<{
       messages: Messages;
-      twitchUri: string;
     }>,
     @Inject(TRPC) public readonly trpc: TRPCClient
   ) {}
@@ -49,8 +45,6 @@ export class IndexPageComponent implements OnInit {
     this.state.set({
       messages: [],
     });
-
-    this.state.connect('twitchUri', from(this.trpc.twitch.authUri.query()));
 
     this.state.hold(this.userService.messageAdded$, (message) => {
       this.state.set('messages', ({ messages }) =>

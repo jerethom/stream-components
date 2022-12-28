@@ -4,7 +4,7 @@ import ms from 'ms';
 
 const lru = new LRU({
   max: 500,
-  ttl: ms('60s'), // 1000 * 60, // 60 seconds
+  ttl: ms('60s'),
 });
 
 export const stateCacheLru: StateCacheAdapter = {

@@ -9,21 +9,24 @@ datasource db {
 }
 
 model User {
-  id       String  @id
-  email    String  @unique
-  password String?
+  id        String  @id
+  login     String  @unique
+  access    String?
+  refresh   String?
+  expiresIn Int?
   //
-  tokens   Token[]
+  tokens    Token[]
 
   @@map("users")
 }
 
 model Token {
-  id      String @id
-  content String @unique
+  id        String    @id
+  content   String    @unique
+  expiresAt DateTime?
   //
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
 
   @@map("tokens")
 }
