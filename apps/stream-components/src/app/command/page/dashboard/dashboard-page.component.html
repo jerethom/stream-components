@@ -1,0 +1,33 @@
+<div
+  *rxLet="commandService.commands$; let commands; let suspense = suspense"
+  [ngClass]="{
+    'grid-cols-2': commands.length > 0,
+    'grid-cols-1': commands.length === 0
+  }"
+  class="grid gap-6"
+>
+  <sc-loader *ngIf="suspense" size="w-8 h-8"></sc-loader>
+
+  <div
+    *ngIf="commands.length === 0"
+    class="flex flex-col items-center gap-4 mt-16"
+  >
+    <button (click)="openNewCommandDialog()" scButton scButtonType="primary">
+      <i class="fa-solid fa-plus group-hover:text-white"></i> Créer une nouvelle
+      commande
+    </button>
+  </div>
+
+  <ng-container *ngIf="commands.length > 0">
+    <div>
+      <p class="text-xl">Liste des commandes</p>
+      <hr />
+      <sc-command-card
+        *rxFor="let command of commands; trackBy: trackBy.id"
+      ></sc-command-card>
+    </div>
+    <div>
+      <p class="text-xl">Configuration de la commande</p>
+    </div>
+  </ng-container>
+</div>

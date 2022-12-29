@@ -1,8 +1,13 @@
 import { isAfter } from 'date-fns';
 import { trpc } from '../../Trpc';
+import { IncomingMessage } from 'node:http';
+import { extractCookieFromIncomingMessage } from '../../Utils/ExtractCookieFromincomingMessage';
 
 export const checkTokenMiddleware = trpc.middleware(async ({ ctx, next }) => {
-  const tokenContent = ctx.req.cookies['sc:token'];
+  const tokenContent =
+    ctx.req instanceof IncomingMessage
+      ? extractCookieFromIncomingMessage(ctx.req)?.['sc:token']
+      : ctx.req.cookies['sc:token'];
   const token = await ctx.database.token.findFirst({
     where: {
       content: String(tokenContent),
@@ -20,6 +25,7 @@ export const checkTokenMiddleware = trpc.middleware(async ({ ctx, next }) => {
       return next({
         ctx: {
           user,
+          token,
         },
       });
     }
@@ -33,11 +39,14 @@ export const checkTokenMiddleware = trpc.middleware(async ({ ctx, next }) => {
       },
     });
   }
-  ctx.res.clearCookie('sc:token');
+  if (!(ctx.req instanceof IncomingMessage)) {
+    ctx.res.clearCookie('sc:token');
+  }
 
   return next({
     ctx: {
       user: null,
+      token: null,
     },
   });
 });

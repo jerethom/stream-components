@@ -1,35 +1,36 @@
 import { Inject, Injectable } from '@angular/core';
-import { Message, User } from '@stream-components/shared';
 import { TRPC, TRPCClient } from './trpc.service';
-import { Observable } from 'rxjs';
 import { TrpcCacheRxState } from './TrpcCache';
+import { from } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService extends TrpcCacheRxState<{
-  refreshUser: string;
-  refreshUsers: void;
   refreshIsLogged: void;
-  refreshLogIn: void;
+  refreshMe: void;
 }> {
-  readonly userAdded$: Observable<User> = this.subscription(
-    this.trpc.user.onAdded.subscribe,
-    void 0
-  );
-
-  readonly messageAdded$: Observable<Message> = this.subscription(
-    this.trpc.chat.onMessage.subscribe,
-    void 0
-  );
-
   readonly isLogged$ = this.query(
     () => this.trpc.user.isLogged.query(),
     this.commands.refreshIsLogged$,
-    'isLogged'
+    'isLogged',
   );
 
-  constructor(@Inject(TRPC) public readonly trpc: TRPCClient) {
+  readonly me$ = this.query(
+    () => this.trpc.user.me.query(),
+    this.commands.refreshMe$,
+    'me',
+  );
+
+  constructor(
+    @Inject(TRPC) public readonly trpc: TRPCClient,
+    public readonly router: Router,
+  ) {
     super();
+  }
+
+  logout() {
+    return from(this.trpc.user.logout.mutate());
   }
 }

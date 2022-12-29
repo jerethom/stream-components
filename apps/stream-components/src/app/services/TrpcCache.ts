@@ -1,17 +1,10 @@
 import { RxActionFactory, RxActions } from '@rx-angular/state/actions';
 import { Actions } from '@rx-angular/state/actions/lib/types';
-import {
-  filter,
-  Observable,
-  shareReplay,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { filter, Observable, shareReplay, startWith, switchMap } from 'rxjs';
 import { AnyFn, SubscriptionArgs, SubscriptionData } from '../../types';
 import { Unsubscribable } from '@trpc/server/observable';
 
-export class TrpcCacheRxState<A extends Partial<Actions>> {
+export class TrpcCacheRxState<A extends Partial<Actions> = object> {
   commands: RxActions<A> = new RxActionFactory<A>().create();
   protected internal = new Map<string, Observable<unknown>>();
 
@@ -26,7 +19,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
   protected query<K extends string | void, Response>(
     trpcQuery: (key: string | null | void | undefined) => Promise<Response>,
     refreshCommand: Observable<K>,
-    composedKey: string | [string, string]
+    composedKey: string | [string, string],
   ): Observable<Response> {
     const key = this.flattenComposedKey(composedKey);
     if (!this.internal.has(key)) {
@@ -34,16 +27,15 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
         key,
         refreshCommand.pipe(
           startWith(null),
-          tap(() => console.log('startWith')),
           filter(
             (refreshKey) =>
               refreshKey === null ||
               refreshKey === undefined ||
-              refreshKey === key
+              refreshKey === key,
           ),
           switchMap((refreshId) => trpcQuery(refreshId ?? key)),
-          shareReplay(1)
-        )
+          shareReplay(1),
+        ),
       );
     }
     return this.internal.get(key) as Observable<Response>;
@@ -56,7 +48,7 @@ export class TrpcCacheRxState<A extends Partial<Actions>> {
       onData?: (data: SubscriptionData<T>) => Promise<void> | void;
       onComplete?: () => Promise<void> | void;
       onError?: () => Promise<void> | void;
-    }
+    },
   ): Observable<SubscriptionData<T>> {
     return new Observable((subscriber) => {
       const sub = trpcSubscription(args, {

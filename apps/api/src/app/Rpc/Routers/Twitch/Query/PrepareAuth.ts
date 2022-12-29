@@ -35,18 +35,5 @@ export const prepareAuth = publicProcedure.query(async ({ ctx }) => {
 
   ctx.stateCache.set(state, uuid);
 
-  // Supprime le token dans les cookies s'il existe
-  const scTokenCookie = ctx.req.cookies['sc:token'];
-  if (scTokenCookie) {
-    ctx.res.clearCookie('sc:token');
-    await ctx.database.token
-      .delete({
-        where: {
-          content: scTokenCookie,
-        },
-      })
-      .catch(() => void 0 /* Ignore error */);
-  }
-
   return ctx.res.redirect(uri.toString());
 });

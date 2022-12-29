@@ -1,4 +1,3 @@
-import type * as PrismaTypes from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
 import { CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { inferAsyncReturnType } from '@trpc/server';
@@ -13,6 +12,7 @@ import { LoggerAdapter } from '../Adapter/Logger/LoggerAdapter';
 import { pinoLogger } from '../Adapter/Logger/PinoLogger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { tokenService } from '../Services/TokenService';
+import { Token, User } from '@stream-components/shared';
 
 type RpcContext = {
   config: ConfigurationAdapter;
@@ -23,7 +23,8 @@ type RpcContext = {
   req: FastifyRequest;
   res: FastifyReply;
   stateCache: StateCacheAdapter;
-  user: PrismaTypes.User | null;
+  user: User | null;
+  token: Token | null;
   services: {
     token: typeof tokenService;
   };
@@ -44,6 +45,7 @@ export function prepareContext() {
       res,
       stateCache: stateCacheLru,
       user: null,
+      token: null,
       services: {
         token: tokenService,
       },

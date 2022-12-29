@@ -1,3 +1,17 @@
-<a href="/api/twitch.prepareAuth" target="_blank">
-  <button class="px-3 py-2 bg-violet-900 text-white rounded-lg">Twitch</button>
-</a>
+<div class="grid grid-cols-1 p-6">
+  <p class="text-center text-xl font-bold">Connexion avec Twitch</p>
+  <div class="mt-10 text-center">
+    <a
+      class="px-4 py-2 text-white rounded-lg inline-flex items-center gap-2 font-semibold transition-colors bg-[#9146FF] hover:bg-[#a469fe]"
+      href="/api/twitch.prepareAuth"
+    >
+      <i class="fa-brands fa-twitch"></i>Twitch
+    </a>
+  </div>
+  <div
+    *ngIf="errorCode"
+    class="mt-6 max-w-md pt-0 rounded-lg border border-red-500 border-l-4"
+  >
+    <p class="p-4">{{ errorMessageFr }}</p>
+  </div>
+</div>

@@ -12,5 +12,7 @@ export function createUser(
     refresh: seed.refresh ?? null,
     access: seed.access ?? null,
     expiresIn: seed.expiresIn ?? null,
+    createdAt: seed.createdAt ?? new Date(),
+    updatedAt: seed.updatedAt ?? null,
   };
 }

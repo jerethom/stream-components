@@ -1,17 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
-import { UserService } from '../../../services/user.service';
-import { ForModule, PushModule } from '@rx-angular/template';
-import { DatePipe } from '@angular/common';
-import { RxState } from '@rx-angular/state';
-import { bounceInLeftOnEnterAnimation } from 'angular-animations';
-import { TrackByService } from '../../../services/track-by.service';
-import { Messages } from '@stream-components/shared';
-import { TRPC, TRPCClient } from '../../../services/trpc.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,36 +9,20 @@ import { TRPC, TRPCClient } from '../../../services/trpc.service';
   styles: [
     `
       :host {
-        @apply block h-screen p-4;
+        @apply block h-screen p-4 flex items-center justify-center bg-slate-100;
       }
     `,
   ],
   standalone: true,
-  imports: [ForModule, DatePipe, PushModule],
-  providers: [RxState],
-  animations: [bounceInLeftOnEnterAnimation()],
+  imports: [NgIf],
+  providers: [],
+  animations: [],
 })
-export class IndexPageComponent implements OnInit {
-  readonly messages$ = this.state.select('messages');
+export class IndexPageComponent {
+  readonly errorCode =
+    this.activatedRoute.snapshot.queryParamMap.get('errorCode');
+  readonly errorMessageFr =
+    this.activatedRoute.snapshot.queryParamMap.get('errorMessageFr');
 
-  constructor(
-    public readonly userService: UserService,
-    public readonly trackBy: TrackByService,
-    public readonly state: RxState<{
-      messages: Messages;
-    }>,
-    @Inject(TRPC) public readonly trpc: TRPCClient
-  ) {}
-
-  ngOnInit(): void {
-    this.state.set({
-      messages: [],
-    });
-
-    this.state.hold(this.userService.messageAdded$, (message) => {
-      this.state.set('messages', ({ messages }) =>
-        [...messages, message].slice(-10)
-      );
-    });
-  }
+  constructor(public readonly activatedRoute: ActivatedRoute) {}
 }

@@ -6,6 +6,7 @@ specifiers:
   '@angular-eslint/eslint-plugin-template': 15.1.0
   '@angular-eslint/template-parser': 15.1.0
   '@angular/animations': 15.0.4
+  '@angular/cdk': 15.0.3
   '@angular/cli': 15.0.4
   '@angular/common': 15.0.4
   '@angular/compiler': 15.0.4
@@ -106,6 +107,7 @@ devDependencies:
   '@angular-eslint/eslint-plugin-template': 15.1.0_d6qaxtm4z57fslwcbi4d5wrunu
   '@angular-eslint/template-parser': 15.1.0_d6qaxtm4z57fslwcbi4d5wrunu
   '@angular/animations': 15.0.4_@angular+core@15.0.4
+  '@angular/cdk': 15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu
   '@angular/cli': 15.0.4
   '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
   '@angular/compiler': 15.0.4_@angular+core@15.0.4
@@ -435,8 +437,8 @@ packages:
     dev: true
 
   /@angular/animations/15.0.4_@angular+core@15.0.4:
-    resolution: {integrity: sha512-fOqf7fHX9aspIUmlOsig8ZyZlalU+eIBsUgu4QpH9+vfQzGCJcKIjPClW4Yb7rkNlyLlfQqaICOxG9gOxuEI7Q==}
-    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
+    resolution: { integrity: sha512-fOqf7fHX9aspIUmlOsig8ZyZlalU+eIBsUgu4QpH9+vfQzGCJcKIjPClW4Yb7rkNlyLlfQqaICOxG9gOxuEI7Q== }
+    engines: { node: ^14.20.0 || ^16.13.0 || >=18.10.0 }
     peerDependencies:
       '@angular/core': 15.0.4
     dependencies:
@@ -444,9 +446,24 @@ packages:
       tslib: 2.4.1
     dev: true
 
+  /@angular/cdk/15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu:
+    resolution: { integrity: sha512-iRLV6V6ksIshDL8Cdn1+DUNTRLqj+DAqmYTWYCEvH4qU6o0XSeXrAHNW5zNFqWgCZbmWt03G5jOBWBNaxa9QKw== }
+    peerDependencies:
+      '@angular/common': ^15.0.0 || ^16.0.0
+      '@angular/core': ^15.0.0 || ^16.0.0
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
+      '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.11.4
+      rxjs: 7.8.0
+      tslib: 2.4.1
+    optionalDependencies:
+      parse5: 7.1.2
+    dev: true
+
   /@angular/cli/15.0.4:
-    resolution: {integrity: sha512-dQEus458EvBYZuM10UPO/1BYshV3cprY4os6uQj6YLdEwOogElkAedUILgtTYOo3jrwc+qjefHVJbz6R+xJCOg==}
-    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
+    resolution: { integrity: sha512-dQEus458EvBYZuM10UPO/1BYshV3cprY4os6uQj6YLdEwOogElkAedUILgtTYOo3jrwc+qjefHVJbz6R+xJCOg== }
+    engines: { node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0' }
     hasBin: true
     dependencies:
       '@angular-devkit/architect': 0.1500.4

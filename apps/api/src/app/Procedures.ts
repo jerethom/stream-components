@@ -1,8 +1,8 @@
 import { trpc } from './Trpc';
 import { checkTokenMiddleware } from './Rpc/Middlewares/CheckTokenMiddleware';
-import { isAuth } from './Rpc/Middlewares/IsAuth';
+import { isAuthMiddleware } from './Rpc/Middlewares/IsAuthMiddleware';
 
-export const publicProcedure = trpc.procedure;
+export const publicProcedure = trpc.procedure.use(checkTokenMiddleware);
 export const privateProcedure = trpc.procedure
   .use(checkTokenMiddleware)
-  .use(isAuth);
+  .use(isAuthMiddleware);

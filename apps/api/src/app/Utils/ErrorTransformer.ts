@@ -2,9 +2,9 @@ import { BaseError } from '@stream-components/shared';
 
 export const errorTransformer = {
   toQueryUrl(error: BaseError): string {
-    return `code=${error.code}&messageFr=${encodeURIComponent(
+    return `errorCode=${error.code}&errorMessageFr=${encodeURIComponent(
       error.content.fr
-    )}&messageEn=${encodeURIComponent(error.content.en)}`;
+    )}&errorMessageEn=${encodeURIComponent(error.content.en)}`;
   },
   toHeaderRequest(error: BaseError): [string, string][] {
     return [
