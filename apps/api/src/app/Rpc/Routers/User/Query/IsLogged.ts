@@ -1,9 +1,9 @@
 import { publicProcedure } from '../../../../Procedures';
 import { z } from 'zod';
-import { extractUserFromAccessToken } from '../../../Middlewares/ExtractUserFromAccessToken';
+import { checkTokenMiddleware } from '../../../Middlewares/CheckTokenMiddleware';
 
 export const isLogged = publicProcedure
-  .use(extractUserFromAccessToken)
+  .use(checkTokenMiddleware)
   .input(
     z
       .object({
@@ -11,14 +11,4 @@ export const isLogged = publicProcedure
       })
       .optional()
   )
-  .query(({ ctx }) => {
-    return !!ctx.user;
-    const currentDate = new Date();
-    ctx.res.cookie('sc:session', 'test', {
-      sameSite: 'strict',
-      secure: false,
-      httpOnly: false,
-      path: '/',
-      maxAge: currentDate.setDate(currentDate.getDate() + 30),
-    });
-  });
+  .query(({ ctx }) => !!ctx.user);

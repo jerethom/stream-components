@@ -1,11 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
-import { ForModule } from '@rx-angular/template';
-import { DatePipe } from '@angular/common';
-import { RxState } from '@rx-angular/state';
-import { bounceInLeftOnEnterAnimation } from 'angular-animations';
-import { TrackByService } from '../../../services/track-by.service';
-import { Messages } from '@stream-components/shared';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,32 +9,20 @@ import { Messages } from '@stream-components/shared';
   styles: [
     `
       :host {
-        @apply block h-screen;
+        @apply block h-screen p-4 flex items-center justify-center bg-slate-100;
       }
     `,
   ],
   standalone: true,
-  imports: [ForModule, DatePipe],
-  providers: [RxState],
-  animations: [bounceInLeftOnEnterAnimation()],
+  imports: [NgIf],
+  providers: [],
+  animations: [],
 })
-export class IndexPageComponent implements OnInit {
-  constructor(
-    public readonly userService: UserService,
-    public readonly trackBy: TrackByService,
-    public readonly state: RxState<{
-      messages: Messages;
-    }>
-  ) {}
+export class IndexPageComponent {
+  readonly errorCode =
+    this.activatedRoute.snapshot.queryParamMap.get('errorCode');
+  readonly errorMessageFr =
+    this.activatedRoute.snapshot.queryParamMap.get('errorMessageFr');
 
-  ngOnInit(): void {
-    this.state.set({
-      messages: [],
-    });
-    this.state.hold(this.userService.messageAdded$, (message) => {
-      this.state.set('messages', ({ messages }) =>
-        [...messages, message].slice(-10)
-      );
-    });
-  }
+  constructor(public readonly activatedRoute: ActivatedRoute) {}
 }

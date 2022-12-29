@@ -5,7 +5,7 @@ import { createUser, User } from '@stream-components/shared';
 
 export const add = publicProcedure.mutation(() => {
   const user: User = createUser({
-    email: 'test@test.com',
+    login: 'test@test.com',
   });
   users.push(user);
   eventEmitter.emit(Events.UseAdded, user);

@@ -9,21 +9,56 @@ datasource db {
 }
 
 model User {
-  id       String  @id
-  email    String  @unique
-  password String?
+  id         String      @id
+  login      String      @unique
+  access     String?
+  refresh    String?
+  expiresIn  Int?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?
   //
-  tokens   Token[]
+  tokens     Token[]
+  chatThemes ChatTheme[]
+  commands   Command[]
 
   @@map("users")
 }
 
 model Token {
-  id      String @id
-  content String @unique
+  id        String    @id
+  content   String    @unique
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
   //
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
 
   @@map("tokens")
+}
+
+model ChatTheme {
+  id        String    @id
+  name      String
+  props     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  //
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@map("chatThemes")
+}
+
+model Command {
+  id        String    @id
+  trigger   String
+  locked    Boolean
+  active    Boolean
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  //
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@map("commands")
 }

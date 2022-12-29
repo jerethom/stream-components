@@ -3,39 +3,45 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { IsLoggedOutGuard } from './guards/is-logged-out.guard';
 
 export const appRouting: Routes = [
-  // Private routes
-  {
-    path: '',
-    canActivate: [IsLoggedInGuard],
-    children: [],
-  },
   // Public routes
   {
-    path: '',
     canActivate: [IsLoggedOutGuard],
-    children: [
-      {
-        path: 'signin',
-        loadChildren: () =>
-          import('./signin/signin.routing').then(
-            ({ signinRouting }) => signinRouting
-          ),
-      },
-      {
-        path: 'signup',
-        loadChildren: () =>
-          import('./signup/signup.routing').then(
-            ({ signupRouting }) => signupRouting
-          ),
-      },
-    ],
+    loadChildren: () =>
+      import('./signin/signin.routing').then(
+        ({ signinRouting }) => signinRouting,
+      ),
+    path: 'signin',
+    title: 'Connexion | Stream Components',
   },
   {
-    path: 'unavailable',
     loadComponent: () =>
       import('./common/unavailable/unavailable.component').then(
-        ({ UnavailableComponent }) => UnavailableComponent
+        ({ UnavailableComponent }) => UnavailableComponent,
       ),
+    path: 'unavailable',
+    title: 'Service indisponible | Stream Components',
+  },
+  // Private routes
+  {
+    canActivate: [IsLoggedInGuard],
+    children: [
+      {
+        path: 'commands',
+        loadComponent: () =>
+          import('./common/layouts/menu/main-layout.component').then(
+            ({ MainLayoutComponent }) => MainLayoutComponent,
+          ),
+        loadChildren: () =>
+          import('./command/command.routing').then(
+            ({ commandRouting }) => commandRouting,
+          ),
+      },
+      {
+        path: '**',
+        redirectTo: 'commands',
+      },
+    ],
+    path: '',
   },
   {
     path: '**',

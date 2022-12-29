@@ -26,10 +26,14 @@ export class IsLoggedOutGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.userService
-      .isLogged$()
-      .pipe(
-        map((isLogged) => (!isLogged ? true : this.router.createUrlTree(['/'])))
-      );
+    return this.userService.isLogged$.pipe(
+      map((isLogged) =>
+        !isLogged
+          ? true
+          : this.router.createUrlTree(['/'], {
+              queryParamsHandling: 'preserve',
+            })
+      )
+    );
   }
 }

@@ -7,6 +7,6 @@ export const hookRouter = (
   opts: FastifyPluginOptions,
   done: (err?: Error) => void
 ) => {
-  instance.get('/twitch.auth', twitchAuth);
+  instance.get('.twitch.auth', twitchAuth);
   done();
 };

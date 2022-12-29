@@ -9,7 +9,7 @@ export const wsServer = (server: http.Server, createContext: any) => {
     path: '/api/subscriptions',
   });
 
-  const handler = applyWSSHandler({
+  const handler = applyWSSHandler<typeof appRouter>({
     wss,
     router: appRouter,
     createContext,

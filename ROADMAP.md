@@ -1,0 +1,2 @@
+- [ ] Authentification avec Twitch
+- [ ] Installer BullMQ et distribuer les jobs

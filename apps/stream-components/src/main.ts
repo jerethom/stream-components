@@ -5,13 +5,17 @@ import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { appRouting } from './app/app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { DialogModule } from '@angular/cdk/dialog';
 
 bootstrapApplication(AppComponent, {
   providers: [
     trpcProvider,
     importProvidersFrom(
       RouterModule.forRoot(appRouting),
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      HttpClientModule,
+      DialogModule,
     ),
   ],
 }).catch((err) => console.error(err));
